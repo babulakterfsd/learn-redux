@@ -1,8 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { counterDecrement, counterIncrement } from '../redux/counter/actionCreators';
 
-function Counter({ count, increment, decrement }) {
+function CounterWithHooks() {
+    const count = useSelector((state) => state.value);
+    const dispatch = useDispatch();
+
+    const incrementHandler = (value) => {
+        dispatch(counterIncrement(value));
+    };
+    const decrementHandler = (value) => {
+        dispatch(counterDecrement(value));
+    };
+
     return (
         <div className="h-screen flex justify-center items-center flex-col bg-slate-400">
             <div className="counter flex justify-center items-center flex-col bg-white px-3 py-6 rounded-md shadow-md w-72 lg:w-96 mb-6 mx-3">
@@ -12,7 +22,7 @@ function Counter({ count, increment, decrement }) {
                         <button
                             type="button"
                             className="increment bg-indigo-400 text-white p-2 rounded-md"
-                            onClick={() => increment(7)}
+                            onClick={() => incrementHandler(7)}
                         >
                             Increment
                         </button>
@@ -21,7 +31,7 @@ function Counter({ count, increment, decrement }) {
                         <button
                             type="button"
                             className="decrement bg-red-400 text-white p-2 rounded-md"
-                            onClick={() => decrement(5)}
+                            onClick={() => decrementHandler(5)}
                         >
                             Decrement
                         </button>
@@ -32,13 +42,4 @@ function Counter({ count, increment, decrement }) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    count: state.value,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    increment: (value) => dispatch(counterIncrement(value)),
-    decrement: (value) => dispatch(counterDecrement(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default CounterWithHooks;
