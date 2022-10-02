@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { counterDecrement, counterIncrement } from '../redux/counter/actionCreators';
+import { showAlert, showConsole } from '../redux/conlert/actionCreators';
 
-function CounterWithHooks() {
-    const count = useSelector((state) => state.counter.value);
+function ConlertWithReducer() {
+    const count = useSelector((state) => state.conlert.value || 'Guest');
     const dispatch = useDispatch();
 
-    const incrementHandler = (value) => {
-        dispatch(counterIncrement(value));
+    const alertHandler = (value) => {
+        dispatch(showAlert(value));
     };
-    const decrementHandler = (value) => {
-        dispatch(counterDecrement(value));
+    const consoleHandler = (value) => {
+        dispatch(showConsole(value));
     };
 
     return (
@@ -22,18 +22,18 @@ function CounterWithHooks() {
                         <button
                             type="button"
                             className="increment bg-indigo-400 text-white p-2 rounded-md"
-                            onClick={() => incrementHandler(7)}
+                            onClick={() => alertHandler('Babul Akter')}
                         >
-                            Increment
+                            Alert Name
                         </button>
                     </div>
                     <div>
                         <button
                             type="button"
                             className="decrement bg-red-400 text-white p-2 rounded-md"
-                            onClick={() => decrementHandler(5)}
+                            onClick={() => consoleHandler('Babul Akter')}
                         >
-                            Decrement
+                            Console Name
                         </button>
                     </div>
                 </div>
@@ -42,4 +42,4 @@ function CounterWithHooks() {
     );
 }
 
-export default CounterWithHooks;
+export default ConlertWithReducer;
