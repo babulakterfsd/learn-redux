@@ -32,6 +32,14 @@ function Counter({ count, increment, decrement }) {
     );
 }
 
+/* 
+lecture 2.8 e khub shundor kore ownProps er use dekhano hoyeche. ownProps er upor amra logical condition use kore state er value ta return korte pari. jemon : 
+
+const mapStateToProps = (state) => ({
+    count: ownProps.somethingPropsPassed ? ownProps.somethingPropsPassed || state.value,
+});
+*/
+
 const mapStateToProps = (state) => ({
     count: state.value,
 });
