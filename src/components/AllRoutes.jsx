@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Home from '../pages/Home';
-import NotFound from '../pages/NotFound';
+import Home from '../views/Home';
+import NotFound from '../views/NotFound';
 
 function AllRoutes() {
     return (
