@@ -1,6 +1,5 @@
 import tickImage from '../assets/images/double-tick.png';
 import noteImage from '../assets/images/notes.png';
-import plusImage from '../assets/images/plus.png';
 
 export default function Header() {
     return (
@@ -14,8 +13,10 @@ export default function Header() {
                 />
                 <button
                     type="submit"
-                    className={`appearance-none w-8 h-8 bg-[url('${plusImage}')] bg-no-repeat bg-contain`}
-                />
+                    className="bg-red-300 text-yellow-600 h-10 w-10 rounded-md font-bold text-2xl"
+                >
+                    +
+                </button>
             </form>
 
             <ul className="flex justify-between my-4 text-xs text-gray-500">
