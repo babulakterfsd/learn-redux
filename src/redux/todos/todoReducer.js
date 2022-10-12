@@ -13,8 +13,8 @@ import {
 const initialState = [
     {
         id: 1,
-        text: 'Learn React JS',
-        completed: true,
+        text: 'Learn React',
+        completed: false,
     },
     {
         id: 2,
@@ -37,6 +37,7 @@ const todoReducer = (state = initialState, action) => {
                 {
                     id: nextTodoId(state),
                     text: action.payload,
+                    completed: false,
                 },
             ];
 
