@@ -4,7 +4,7 @@
 import { CHANGE_COLOR, CHANGE_STATUS } from './actionTypes';
 
 const initialState = {
-    status: 'All',
+    status: 'all',
     colors: [],
 };
 
