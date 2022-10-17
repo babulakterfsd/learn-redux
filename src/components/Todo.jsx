@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useDispatch } from 'react-redux';
 import cancelImage from '../assets/images/cancel.png';
+import editImage from '../assets/images/edit.png';
 import deleteTodoFromDB from '../redux/todos/thunk/deleteTodo';
 import updateColor from '../redux/todos/thunk/updateTodoColor';
 import updateStatus from '../redux/todos/thunk/updateTodoStatus';
@@ -67,6 +68,8 @@ export default function Todo({ todo }) {
                 }`}
                 onClick={() => handleSelectColor(id, 'red')}
             />
+
+            <img src={editImage} className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" alt="Edit" />
 
             <img
                 src={cancelImage}
