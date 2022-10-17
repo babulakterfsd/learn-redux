@@ -2,7 +2,7 @@
 import {
     ADD_TODO, CLEAR_COMPLETED,
     COMPLETE_ALL,
-    DELETE_TODO, LOAD_TODO, SELECT_COLOR,
+    DELETE_TODO, EDIT_TEXT, LOAD_TODO, SELECT_COLOR,
     TOGGLE_TODO
 } from './actionTypes';
 
@@ -26,6 +26,14 @@ export const selectColor = (todoID, color) => ({
     payload: {
         todoID,
         color,
+    },
+});
+
+export const editText = (todoId, text) => ({
+    type: EDIT_TEXT,
+    payload: {
+        todoId,
+        text
     },
 });
 

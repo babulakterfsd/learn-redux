@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import cancelImage from '../assets/images/cancel.png';
 import editImage from '../assets/images/edit.png';
 import deleteTodoFromDB from '../redux/todos/thunk/deleteTodo';
+import editTodoText from '../redux/todos/thunk/editTodoText';
 import updateColor from '../redux/todos/thunk/updateTodoColor';
 import updateStatus from '../redux/todos/thunk/updateTodoStatus';
 
@@ -17,6 +18,10 @@ export default function Todo({ todo }) {
 
     const handleSelectColor = (todoID, selectedColor) => {
         dispatch(updateColor(todoID, selectedColor));
+    };
+
+    const handleEditTodoText = (todoID, newText) => {
+        dispatch(editTodoText(todoID, 'The new text by babul'));
     };
 
     const handleDelete = (todoID) => {
@@ -69,7 +74,12 @@ export default function Todo({ todo }) {
                 onClick={() => handleSelectColor(id, 'red')}
             />
 
-            <img src={editImage} className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" alt="Edit" />
+            <img
+                src={editImage}
+                className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
+                alt="Edit"
+                onClick={() => handleEditTodoText(id)}
+            />
 
             <img
                 src={cancelImage}

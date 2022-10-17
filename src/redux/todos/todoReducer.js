@@ -5,6 +5,7 @@ import {
     CLEAR_COMPLETED,
     COMPLETE_ALL,
     DELETE_TODO,
+    EDIT_TEXT,
     LOAD_TODO,
     SELECT_COLOR,
     // eslint-disable-next-line prettier/prettier
@@ -50,6 +51,18 @@ const todoReducer = (state = initialState, action) => {
                     return {
                         ...todo,
                         color,
+                    };
+                }
+                return todo;
+            });
+
+        case EDIT_TEXT:
+            const { todoId, text } = action.payload;
+            return state.map((todo) => {
+                if (todo.id === todoId) {
+                    return {
+                        ...todo,
+                        text,
                     };
                 }
                 return todo;
