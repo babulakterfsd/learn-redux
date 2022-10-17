@@ -30,7 +30,7 @@ const todoReducer = (state = initialState, action) => {
                 },
             ];
         case LOAD_TODO:
-            return [...state, ...action.payload];
+            return [...action.payload];
 
         case TOGGLE_TODO:
             return state.map((todo) => {

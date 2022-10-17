@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import tickImage from '../assets/images/double-tick.png';
 import noteImage from '../assets/images/notes.png';
-import { addTodo, clearCompleted, completeAll } from '../redux/todos/actionCreator';
+import { clearCompleted, completeAll } from '../redux/todos/actionCreator';
+
+import addNewTodo from '../redux/todos/thunk/addNewTodo';
 
 export default function Header() {
     const [input, setInput] = useState('');
@@ -15,7 +17,7 @@ export default function Header() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(addTodo(input));
+        dispatch(addNewTodo(input));
         setInput('');
     };
 

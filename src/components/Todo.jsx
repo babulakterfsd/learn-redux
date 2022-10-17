@@ -2,14 +2,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useDispatch } from 'react-redux';
 import cancelImage from '../assets/images/cancel.png';
-import { deleteTodo, selectColor, toggleTodo } from '../redux/todos/actionCreator';
+import { deleteTodo, selectColor } from '../redux/todos/actionCreator';
+import updateStatus from '../redux/todos/thunk/updateTodoStatus';
 
 export default function Todo({ todo }) {
     const { id, text, completed, color } = todo;
     const dispatch = useDispatch();
 
     const handleToggle = (todoID) => {
-        dispatch(toggleTodo(todoID));
+        dispatch(updateStatus(todoID, completed));
     };
 
     const handleSelectColor = (todoID, selectedColor) => {
