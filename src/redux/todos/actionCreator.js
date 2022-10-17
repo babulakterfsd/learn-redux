@@ -1,16 +1,19 @@
 /* eslint-disable prettier/prettier */
 import {
-    ADD_TODO,
-    CLEAR_COMPLETED,
+    ADD_TODO, CLEAR_COMPLETED,
     COMPLETE_ALL,
-    DELETE_TODO,
-    SELECT_COLOR,
+    DELETE_TODO, LOAD_TODO, SELECT_COLOR,
     TOGGLE_TODO
 } from './actionTypes';
 
 export const addTodo = (todoText) => ({
     type: ADD_TODO,
     payload: todoText,
+});
+
+export const loadTodo = (todos) => ({
+    type: LOAD_TODO,
+    payload: todos,
 });
 
 export const toggleTodo = (todoID) => ({

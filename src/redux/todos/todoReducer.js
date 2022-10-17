@@ -5,24 +5,13 @@ import {
     CLEAR_COMPLETED,
     COMPLETE_ALL,
     DELETE_TODO,
+    LOAD_TODO,
     SELECT_COLOR,
     // eslint-disable-next-line prettier/prettier
     TOGGLE_TODO
 } from './actionTypes';
 
-const initialState = [
-    {
-        id: 1,
-        text: 'Learn React',
-        completed: false,
-    },
-    {
-        id: 2,
-        text: 'Learn Redux',
-        completed: false,
-        color: 'red',
-    },
-];
+const initialState = [];
 
 const nextTodoId = (todos) => {
     const maxId = todos.reduce((maxID, todo) => Math.max(todo.id, maxID), -1);
@@ -40,6 +29,8 @@ const todoReducer = (state = initialState, action) => {
                     completed: false,
                 },
             ];
+        case LOAD_TODO:
+            return [...state, ...action.payload];
 
         case TOGGLE_TODO:
             return state.map((todo) => {
