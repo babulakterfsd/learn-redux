@@ -25,8 +25,8 @@ function Home() {
             </div>
 
             {/* only completed todo box */}
-            <div className="px-6 font-sans lg:w-96 -mt-10 mb-12 lg:mt-0 lg:mb-0">
-                <div className="w-full max-w-3xl shadow-lg rounded-lg p-6 bg-white">
+            <div className="px-6 font-sans lg:w-96 mb-12 lg:mt-0 lg:mb-0">
+                <div className="w-full max-w-3xl shadow-lg rounded-lg p-6 bg-white mt-6">
                     <h1 className="text-md font-semibold underline text-center">{`Completed Todos (${completedTodos.length})`}</h1>
                     <CompletedTodoList />
                 </div>
