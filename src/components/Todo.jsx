@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import cancelImage from '../assets/images/cancel.png';
 import editImage from '../assets/images/edit.png';
@@ -11,6 +12,8 @@ import updateStatus from '../redux/todos/thunk/updateTodoStatus';
 export default function Todo({ todo }) {
     const { id, text, completed, color } = todo;
     const dispatch = useDispatch();
+    const [isEditing, setIsEditing] = useState(false);
+    const [input, setInput] = useState(text);
 
     const handleToggle = (todoID) => {
         dispatch(updateStatus(todoID, completed));
@@ -20,8 +23,13 @@ export default function Todo({ todo }) {
         dispatch(updateColor(todoID, selectedColor));
     };
 
-    const handleEditTodoText = (todoID, newText) => {
-        dispatch(editTodoText(todoID, 'The new text by babul'));
+    const handleEditInput = (e) => {
+        setInput(e.target.value);
+    };
+
+    const handleSubmitNewText = (todoID) => {
+        setIsEditing(false);
+        dispatch(editTodoText(todoID, input));
     };
 
     const handleDelete = (todoID) => {
@@ -51,7 +59,18 @@ export default function Todo({ todo }) {
                 )}
             </div>
 
-            <div className={`select-none flex-1 ${!completed && 'line-through'}`}>{text}</div>
+            {isEditing ? (
+                <form onSubmit={() => handleSubmitNewText(id)} type="button" className="flex-grow">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={handleEditInput}
+                        className="w-full text-gray-700 bg-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:bg-white focus:border-gray-500"
+                    />
+                </form>
+            ) : (
+                <div className={`select-none flex-1 ${!completed && 'line-through'}`}>{text}</div>
+            )}
 
             <div
                 className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${
@@ -78,7 +97,7 @@ export default function Todo({ todo }) {
                 src={editImage}
                 className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
                 alt="Edit"
-                onClick={() => handleEditTodoText(id)}
+                onClick={() => setIsEditing(true)}
             />
 
             <img
