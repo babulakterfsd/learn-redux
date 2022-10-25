@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
+import fetchTodos from './thunk/fetchTodos';
 
 const initialState = {
-    name: 'Babul Akter',
-    age: 29,
+    person: {
+        name: 'Babul Akter',
+        age: 29,
+    },
+    loading: false,
+    todos: [],
+    error: '',
 };
 
 const testSlice = createSlice({
@@ -10,8 +16,22 @@ const testSlice = createSlice({
     initialState,
     reducers: {
         increase: (state, action) => {
-            state.age += action.payload;
+            state.person.age += action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchTodos.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchTodos.fulfilled, (state, action) => {
+            state.loading = false;
+            state.todos = action.payload;
+        });
+        builder.addCase(fetchTodos.rejected, (state, action) => {
+            state.loading = false;
+            state.todos = [];
+            state.error = action.error.message;
+        });
     },
 });
 
