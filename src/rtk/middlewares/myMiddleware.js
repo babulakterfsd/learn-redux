@@ -1,5 +1,6 @@
 const myMiddleware = (store) => (next) => (action) => {
-    next();
+    console.log(action.type);
+    next(action);
 };
 
 export default myMiddleware;
