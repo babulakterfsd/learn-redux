@@ -25,7 +25,7 @@ function Home() {
             </button>
 
             {test.loading === true ? (
-                <p className="text-xl text-red-600 mt-3 font-semibold">Loading..</p>
+                <p className="text-xl text-red-600 mt-3 font-semibold">Loading...</p>
             ) : (
                 test.todos.map((todo) => <p key={todo.id}>{todo.title}</p>)
             )}
