@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../views/Home';
 import NotFound from '../views/NotFound';
 import Video from '../views/Video';
+import Footer from './Footer';
 import Navbar from './navbar/Navbar';
 
 function AllRoutes() {
@@ -15,6 +16,7 @@ function AllRoutes() {
                 <Route path="/videos/:videoId" element={<Video />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
         </>
     );
 }
