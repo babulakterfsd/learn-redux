@@ -1,11 +1,13 @@
-import React from 'react';
+import VideoGrid from '../components/grid/VideoGrid';
+import Pagination from '../components/Pagination';
+import Tags from '../components/tags/Tags';
 
-function Home() {
+export default function Home() {
     return (
-        <div className="h-screen flex flex-col justify-center items-center">
-            <p>This is home</p>
-        </div>
+        <>
+            <Tags />
+            <VideoGrid />
+            <Pagination />
+        </>
     );
 }
-
-export default Home;
