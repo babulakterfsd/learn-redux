@@ -23,7 +23,7 @@ const videosSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchVideos.fulfilled, (state, action) => {
-                state.loading = true;
+                state.loading = false;
                 state.videos = action.payload;
             })
             .addCase(fetchVideos.rejected, (state, action) => {
