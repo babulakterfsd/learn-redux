@@ -11,9 +11,6 @@ export default function Pagination() {
                 <div className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full cursor-pointer">
                     3
                 </div>
-                <div className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full cursor-pointer">
-                    4
-                </div>
             </div>
         </section>
     );
