@@ -1,7 +1,26 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { resetTagsAndSearch, selectAuthor } from '../../rtk/features/filter/filterSlice';
+import { selectPage } from '../../rtk/features/pagination/paginationSlice';
 
 export default function RelatedVideoListItem({ video }) {
     const { id, title, author, thumbnail, duration, views, date } = video;
+
+    const { currentPage } = useSelector((state) => state.pagination);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleAuthor = () => {
+        dispatch(resetTagsAndSearch());
+        dispatch(selectAuthor(author));
+
+        if (currentPage !== 1) {
+            dispatch(selectPage(1));
+        }
+    };
+
     return (
         <div className="w-full flex flex-row gap-2 mb-4">
             <div className="relative w-[168px] h-[94px] flex-none duration-300 hover:scale-[1.03]">
@@ -17,12 +36,13 @@ export default function RelatedVideoListItem({ video }) {
                 <Link to={`/videos/${id}`}>
                     <p className="text-slate-900 text-sm font-semibold">{title}</p>
                 </Link>
-                <Link
-                    className="text-gray-400 text-xs mt-2 hover:text-gray-600"
-                    to={`/videos/${id}`}
+                <span
+                    className="text-gray-400 text-xs mt-2 hover:text-gray-600 cursor-pointer"
+                    onClick={() => navigate('/')}
+                    onMouseDownCapture={() => handleAuthor()}
                 >
                     {author}
-                </Link>
+                </span>
                 <p className="text-gray-400 text-xs mt-1">
                     {views} views . {date}
                 </p>

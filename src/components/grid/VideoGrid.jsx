@@ -8,11 +8,11 @@ export default function VideGrid() {
     const { videos, loading, error } = useSelector((state) => state.videos);
     const { currentPage } = useSelector((state) => state.pagination);
     const dispatch = useDispatch();
-    const { tags, searchKeyword } = useSelector((state) => state.filter);
+    const { tags, searchKeyword, author } = useSelector((state) => state.filter);
 
     useEffect(() => {
-        dispatch(fetchVideos({ tags, searchKeyword, currentPage }));
-    }, [dispatch, tags, searchKeyword, currentPage]);
+        dispatch(fetchVideos({ tags, searchKeyword, currentPage, author }));
+    }, [dispatch, tags, searchKeyword, currentPage, author]);
 
     let content;
     if (loading) content = <Loading />;
@@ -25,6 +25,12 @@ export default function VideGrid() {
 
     return (
         <section className="pt-16">
+            {author && (
+                <div className="mb-12 ml-10 font-semibold">
+                    You are watching <span className="text-green-400 text-md">{`${author}'s`}</span>{' '}
+                    content...
+                </div>
+            )}
             <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto px-5 lg:px-0 min-h-screen">
                 {content}
             </div>

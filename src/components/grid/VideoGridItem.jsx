@@ -1,7 +1,22 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { resetTagsAndSearch, selectAuthor } from '../../rtk/features/filter/filterSlice';
+import { selectPage } from '../../rtk/features/pagination/paginationSlice';
 
 export default function VideoGridItem({ video = {} }) {
     const { id, thumbnail, title, duration, author, avatar, views, date } = video;
+    const { currentPage } = useSelector((state) => state.pagination);
+
+    const dispatch = useDispatch();
+
+    const handleAuthor = () => {
+        dispatch(resetTagsAndSearch());
+        dispatch(selectAuthor(author));
+        if (currentPage !== 1) {
+            dispatch(selectPage(1));
+        }
+    };
 
     return (
         <div className="col-span-12 sm:col-span-6 md:col-span-3 duration-300 hover:scale-[1.03]">
@@ -25,12 +40,13 @@ export default function VideoGridItem({ video = {} }) {
                         <Link to={`videos/${id}`}>
                             <p className="text-slate-900 text-sm font-semibold">{title}</p>
                         </Link>
-                        <Link
-                            className="text-gray-400 text-xs mt-2 hover:text-gray-600"
+                        <span
+                            className="text-gray-400 text-xs mt-2 hover:text-gray-600 cursor-pointer"
                             to={`videos/${id}`}
+                            onClick={() => handleAuthor()}
                         >
                             {author}
-                        </Link>
+                        </span>
                         <p className="text-gray-400 text-xs mt-1">
                             {views} views . {date}
                         </p>
