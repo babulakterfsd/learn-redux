@@ -29,9 +29,20 @@ const filterSlice = createSlice({
             state.tags = [];
             state.searchKeyword = '';
         },
+        resetAllFilters: (state) => {
+            state.author = '';
+            state.searchKeyword = '';
+            state.tags = [];
+        },
     },
 });
 
 export default filterSlice.reducer;
-export const { selectTag, removeTag, handleSearch, selectAuthor, resetTagsAndSearch } =
-    filterSlice.actions;
+export const {
+    selectTag,
+    removeTag,
+    handleSearch,
+    selectAuthor,
+    resetTagsAndSearch,
+    resetAllFilters,
+} = filterSlice.actions;
