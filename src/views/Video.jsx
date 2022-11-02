@@ -11,7 +11,7 @@ export default function Video() {
     const { loading, video, error } = useSelector((state) => state.video);
     const dispatch = useDispatch();
     const { videoId } = useParams();
-    const { id, link, title, tags, date, description } = video;
+    const { id, link, title, tags, date, description, likes, unlikes } = video;
 
     useEffect(() => {
         dispatch(fetchVideo(videoId));
@@ -28,7 +28,14 @@ export default function Video() {
                 <div className="col-span-full w-full space-y-8 lg:col-span-2">
                     <VideoPlayer link={link} title={title} />
 
-                    <VideoDescription title={title} date={date} description={description} />
+                    <VideoDescription
+                        title={title}
+                        date={date}
+                        description={description}
+                        likes={likes}
+                        unlikes={unlikes}
+                        id={id}
+                    />
                 </div>
 
                 <RelatedVideoList currentVideoId={id} tags={tags} />

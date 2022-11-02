@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getVideo } from './videoAPI';
+import { getVideo, updateReaction } from './videoAPI';
 
 const initialState = {
     loading: false,
@@ -12,6 +12,14 @@ export const fetchVideo = createAsyncThunk('video/fetchVideo', async (id) => {
     const video = await getVideo(id);
     return video;
 });
+
+export const updateVideoReaction = createAsyncThunk(
+    'video/updateReaction',
+    async ({ id, reaction }) => {
+        const updatedVideo = await updateReaction({ id, reaction });
+        return updatedVideo;
+    }
+);
 
 const videoSlice = createSlice({
     name: 'video',
@@ -31,6 +39,10 @@ const videoSlice = createSlice({
                 state.loading = false;
                 state.video = {};
             });
+        builder.addCase(updateVideoReaction.fulfilled, (state, action) => {
+            state.video.likes = action.payload.likes;
+            state.video.unlikes = action.payload.unlikes;
+        });
     },
 });
 

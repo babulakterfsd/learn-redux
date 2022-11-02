@@ -1,6 +1,6 @@
 import LikeUnlike from './LikeUnlike';
 
-export default function VideoDescription({ title, date, description }) {
+export default function VideoDescription({ title, date, description, likes, unlikes, id }) {
     return (
         <div>
             <h1 className="text-lg font-semibold tracking-tight text-slate-800">{title}</h1>
@@ -9,7 +9,7 @@ export default function VideoDescription({ title, date, description }) {
                     Uploaded on {date}
                 </h2>
 
-                <LikeUnlike />
+                <LikeUnlike likes={likes} unlikes={unlikes} videoID={id} />
             </div>
 
             <div className="mt-4 text-sm text-[#334155] dark:text-slate-400">{description}</div>
