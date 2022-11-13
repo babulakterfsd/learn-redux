@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addTransaction, getTransactions, updateTransaction } from './transactionAPI';
+import {
+    addTransaction,
+    deleteTransaction,
+    getTransactions,
+    updateTransaction
+} from './transactionAPI';
 
 const initialState = {
     loading: false,
@@ -27,7 +32,7 @@ export const editTransaction = createAsyncThunk(
 );
 
 export const removeTransaction = createAsyncThunk('transaction/deleteTransaction', async (id) => {
-    const transaction = await updateTransaction(id);
+    const transaction = await deleteTransaction(id);
     return transaction;
 });
 
@@ -96,7 +101,7 @@ const transactionSlice = createSlice({
             })
             .addCase(removeTransaction.fulfilled, (state, action) => {
                 state.loading = false;
-                state.transactions = state.transactions.filter((t) => t.id !== action.payload.id);
+                state.transactions = state.transactions.filter((t) => t.id !== action.meta.arg);
             })
             .addCase(removeTransaction.rejected, (state, action) => {
                 state.loading = false;
