@@ -3,6 +3,7 @@ import {
     addTransaction,
     deleteTransaction,
     getTransactions,
+    // eslint-disable-next-line prettier/prettier
     updateTransaction
 } from './transactionAPI';
 
