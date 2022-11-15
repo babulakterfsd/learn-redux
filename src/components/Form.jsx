@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     createTransaction,
     editInactive,
+    // eslint-disable-next-line prettier/prettier
     editTransaction
 } from '../rtk/features/transaction/transactionSlice';
 
