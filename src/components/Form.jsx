@@ -78,6 +78,7 @@ export default function Form() {
                         placeholder="Title"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        className="px-2 py-1 border border-blue-300 focus:outline-none"
                     />
                 </div>
 
@@ -115,6 +116,7 @@ export default function Form() {
                         placeholder="Enter Amount"
                         name="amount"
                         value={amount}
+                        className="px-2 py-1 border border-blue-300 focus:outline-none"
                         onChange={(e) => setAmount(e.target.value)}
                     />
                 </div>
