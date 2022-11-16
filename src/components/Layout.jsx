@@ -1,8 +1,12 @@
+import { Link } from 'react-router-dom';
+
 export default function Layout({ children }) {
     return (
         <div className="App">
             <div className="header">
-                <h1>Expense Tracker</h1>
+                <Link to="/">
+                    <h1>Expense Tracker</h1>
+                </Link>
             </div>
 
             <div className="main">

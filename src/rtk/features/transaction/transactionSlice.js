@@ -2,114 +2,142 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     addTransaction,
     deleteTransaction,
-    getTransactions,
+    editTransaction,
     // eslint-disable-next-line prettier/prettier
-    updateTransaction
+    getTransactions
 } from './transactionAPI';
 
 const initialState = {
-    loading: false,
     transactions: [],
+    balance: 0,
+    totalCount: 1,
+    isLoading: false,
+    isError: false,
     error: '',
     editing: {},
+    modalEdit: false,
 };
 
-export const fetchTransactions = createAsyncThunk('transaction/fetchTransactions', async () => {
-    const transactions = await getTransactions();
-    return transactions;
-});
+// async thunks
+export const fetchTransactions = createAsyncThunk(
+    'transaction/fetchTransactions',
+    async ({ currentPage, limit, search, type } = { currentPage: 1, limit: 5 }) => {
+        const transactions = await getTransactions({
+            currentPage,
+            limit,
+            search,
+            type,
+        });
+        return transactions;
+    }
+);
 
 export const createTransaction = createAsyncThunk('transaction/createTransaction', async (data) => {
     const transaction = await addTransaction(data);
     return transaction;
 });
 
-export const editTransaction = createAsyncThunk(
-    'transaction/updateTransaction',
+export const changeTransaction = createAsyncThunk(
+    'transaction/changeTransaction',
     async ({ id, data }) => {
-        const transaction = await updateTransaction({ id, data });
+        const transaction = await editTransaction(id, data);
         return transaction;
     }
 );
 
-export const removeTransaction = createAsyncThunk('transaction/deleteTransaction', async (id) => {
+export const removeTransaction = createAsyncThunk('transaction/removeTransaction', async (id) => {
     const transaction = await deleteTransaction(id);
     return transaction;
 });
 
+// create slice
 const transactionSlice = createSlice({
-    name: 'transactions',
+    name: 'transaction',
     initialState,
     reducers: {
         editActive: (state, action) => {
             state.editing = action.payload;
         },
-        editInactive: (state) => {
+        editInActive: (state) => {
             state.editing = {};
+        },
+        setModalEdit: (state) => {
+            state.modalEdit = true;
+        },
+        cancelModalEdit: (state) => {
+            state.modalEdit = false;
         },
     },
     extraReducers: (builder) => {
-        // read
         builder
             .addCase(fetchTransactions.pending, (state) => {
-                state.error = '';
-                state.loading = true;
+                state.isError = false;
+                state.isLoading = true;
             })
             .addCase(fetchTransactions.fulfilled, (state, action) => {
-                state.loading = false;
-                state.transactions = action.payload;
+                state.isError = false;
+                state.isLoading = false;
+                state.transactions = action.payload.transactions;
+                state.balance = action.payload.balance;
+                state.totalCount = Number(action.payload.totalCount);
             })
             .addCase(fetchTransactions.rejected, (state, action) => {
-                state.loading = false;
+                state.isLoading = false;
+                state.isError = true;
                 state.error = action.error?.message;
-            });
-        // create
-        builder
+                state.transactions = [];
+            })
             .addCase(createTransaction.pending, (state) => {
-                state.error = '';
-                state.loading = true;
+                state.isError = false;
             })
             .addCase(createTransaction.fulfilled, (state, action) => {
-                state.loading = false;
-                state.transactions.push(action.payload);
+                state.isError = false;
+                state.isLoading = false;
+                state.transactions.unshift(action.payload.transaction);
+                state.balance = action.payload.balance;
             })
             .addCase(createTransaction.rejected, (state, action) => {
-                state.loading = false;
+                state.isLoading = false;
+                state.isError = true;
                 state.error = action.error?.message;
-            });
-        // update
-        builder
-            .addCase(editTransaction.pending, (state) => {
-                state.error = '';
-                state.loading = true;
             })
-            .addCase(editTransaction.fulfilled, (state, action) => {
-                state.loading = false;
+            .addCase(changeTransaction.pending, (state) => {
+                state.isError = false;
+            })
+            .addCase(changeTransaction.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+
                 const indexToUpdate = state.transactions.findIndex(
-                    (t) => t.id === action.payload.id
+                    (t) => t.id === action.payload.transaction.id
                 );
-                state.transactions[indexToUpdate] = action.payload;
+
+                state.transactions[indexToUpdate] = action.payload.transaction;
+                state.balance = action.payload.balance;
             })
-            .addCase(editTransaction.rejected, (state, action) => {
-                state.loading = false;
+            .addCase(changeTransaction.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
                 state.error = action.error?.message;
-            });
-        // delete
-        builder
+            })
             .addCase(removeTransaction.pending, (state) => {
-                state.error = '';
-                state.loading = true;
+                state.isError = false;
+                state.isLoading = true;
             })
             .addCase(removeTransaction.fulfilled, (state, action) => {
-                state.loading = false;
+                state.isError = false;
+                state.isLoading = false;
+
                 state.transactions = state.transactions.filter((t) => t.id !== action.meta.arg);
+                state.balance = action.payload.balance;
             })
             .addCase(removeTransaction.rejected, (state, action) => {
-                state.loading = false;
+                state.isLoading = false;
+                state.isError = true;
                 state.error = action.error?.message;
             });
     },
 });
 
 export default transactionSlice.reducer;
-export const { editActive, editInactive } = transactionSlice.actions;
+export const { editActive, editInActive, setModalEdit, cancelModalEdit } = transactionSlice.actions;

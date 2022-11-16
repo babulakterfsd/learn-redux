@@ -1,81 +1,94 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    cancelModalEdit,
+    changeTransaction,
     createTransaction,
-    editInactive,
     // eslint-disable-next-line prettier/prettier
-    editTransaction
+    editInActive
 } from '../rtk/features/transaction/transactionSlice';
 
-/* eslint-disable jsx-a11y/label-has-associated-control */
 export default function Form() {
     const [name, setName] = useState('');
     const [type, setType] = useState('');
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState('');
     const [editMode, setEditMode] = useState(false);
+
     const dispatch = useDispatch();
-    const { error, loading } = useSelector((state) => state.transactions);
-    const { editing } = useSelector((state) => state.transactions);
+    const { isLoading, isError } = useSelector((state) => state.transaction);
+    const { editing } = useSelector((state) => state.transaction) || {};
 
-    const transactionDetails = { name, type, amount: +amount };
-
-    const resetForm = () => {
-        setType('');
-        setAmount(0);
+    const reset = () => {
         setName('');
+        setType('');
+        setAmount('');
     };
 
+    // listen for edit mode active
     useEffect(() => {
-        if (editing?.id) {
+        const { id } = editing || {};
+        if (id) {
             setEditMode(true);
             setName(editing?.name);
             setType(editing?.type);
             setAmount(editing?.amount);
         } else {
             setEditMode(false);
+            reset();
         }
     }, [editing]);
 
-    const handleAddTransaction = (e) => {
-        e.preventDefault();
-        dispatch(createTransaction(transactionDetails));
-        resetForm();
-    };
-
-    const handleUpdateTransaction = (e) => {
+    const handleCreate = (e) => {
         e.preventDefault();
         dispatch(
-            editTransaction({
+            createTransaction({
+                name,
+                type,
+                amount: Number(amount),
+            })
+        );
+        reset();
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        dispatch(
+            changeTransaction({
                 id: editing?.id,
                 data: {
                     name,
+                    amount: Number(amount),
                     type,
-                    amount,
                 },
             })
         );
         setEditMode(false);
-        resetForm();
+        reset();
+        dispatch(editInActive());
+        dispatch(cancelModalEdit());
     };
 
-    const handleCancelEdit = () => {
-        dispatch(editInactive());
-        resetForm();
+    const cancelEditMode = () => {
+        reset();
         setEditMode(false);
+        dispatch(editInActive());
+        dispatch(cancelModalEdit());
     };
 
     return (
         <div className="form">
             <h3>Add new transaction</h3>
 
-            <form onSubmit={editMode ? handleUpdateTransaction : handleAddTransaction}>
+            <form onSubmit={editMode ? handleUpdate : handleCreate}>
                 <div className="form-group">
-                    <label>Name</label>
+                    <label htmlFor="name">Name</label>
                     <input
                         type="text"
                         name="name"
+                        id="name"
                         required
-                        placeholder="Title"
+                        placeholder="enter title"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="px-2 py-1 border border-blue-300 focus:outline-none"
@@ -86,25 +99,27 @@ export default function Form() {
                     <label>Type</label>
                     <div className="radio_group">
                         <input
-                            type="radio"
                             required
+                            type="radio"
                             value="income"
+                            id="income"
                             name="type"
                             checked={type === 'income'}
-                            onChange={(e) => setType(e.target.value)}
+                            onChange={() => setType('income')}
                         />
-                        <label>Income</label>
+                        <label htmlFor="income">Income</label>
                     </div>
                     <div className="radio_group">
                         <input
                             type="radio"
                             value="expense"
+                            id="expense"
                             name="type"
-                            placeholder="expense"
+                            placeholder="Expense"
                             checked={type === 'expense'}
-                            onChange={(e) => setType(e.target.value)}
+                            onChange={() => setType('expense')}
                         />
-                        <label>Expense</label>
+                        <label htmlFor="expense">Expense</label>
                     </div>
                 </div>
 
@@ -113,25 +128,23 @@ export default function Form() {
                     <input
                         type="number"
                         required
-                        placeholder="Enter Amount"
+                        placeholder="enter amount"
                         name="amount"
                         value={amount}
-                        className="px-2 py-1 border border-blue-300 focus:outline-none"
                         onChange={(e) => setAmount(e.target.value)}
+                        className="px-2 py-1 border border-blue-300 focus:outline-none"
                     />
                 </div>
 
-                <button disabled={loading} type="submit" className="btn bg-indigo-600 text-white">
-                    {editMode ? ' Update Transaction' : 'Add Transaction'}
+                <button disabled={isLoading} className="btn bg-green-900" type="submit">
+                    {editMode ? 'Update Transaction' : 'Add Transaction'}
                 </button>
+
+                {!isLoading && isError && <p className="error">There was an error occured</p>}
             </form>
 
-            {error !== '' && (
-                <p className="my-2 text-red-600 bg-red-300 p-1 text-center">Something is wrong</p>
-            )}
-
             {editMode && (
-                <button className="btn cancel_edit" type="button" onClick={handleCancelEdit}>
+                <button type="button" className="btn cancel_edit" onClick={cancelEditMode}>
                     Cancel Edit
                 </button>
             )}
