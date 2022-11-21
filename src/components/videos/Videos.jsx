@@ -1,15 +1,15 @@
-import Video from './Video';
+import VideoCard from './VideoCard';
 
 export default function Videos() {
     return (
         <>
-            <Video />
-            <Video />
-            <Video />
-            <Video />
-            <Video />
-            <Video />
-            <Video />
+            <VideoCard />
+            <VideoCard />
+            <VideoCard />
+            <VideoCard />
+            <VideoCard />
+            <VideoCard />
+            <VideoCard />
         </>
     );
 }
