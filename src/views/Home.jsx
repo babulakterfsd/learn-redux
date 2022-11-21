@@ -1,13 +1,11 @@
-import VideoGrid from '../components/grid/VideoGrid';
-import Pagination from '../components/Pagination';
-import Tags from '../components/tags/Tags';
+import Videos from '../components/videos/Videos';
 
 export default function Home() {
     return (
-        <>
-            <Tags />
-            <VideoGrid />
-            <Pagination />
-        </>
+        <section className="pt-6 pb-20 min-h-[calc(100vh_-_157px)]">
+            <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto px-5 lg:px-0 min-h-[300px]">
+                <Videos />
+            </div>
+        </section>
     );
 }
