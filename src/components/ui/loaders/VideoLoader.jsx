@@ -9,15 +9,9 @@ export default function VideoLoader() {
                 <div className="bg-slate-200 rounded-full h-8 w-8 shrink-0" />
 
                 <div className="flex flex-col space-y-1 grow">
-                    <p className="bg-slate-200 text-slate-200 text-[8px]">
-                        Loading...
-                    </p>
-                    <p className="bg-slate-200 text-slate-200 text-[8px]">
-                        Loading...
-                    </p>
-                    <p className="bg-slate-200 text-slate-200 text-[8px]">
-                        Loading...
-                    </p>
+                    <p className="bg-slate-200 text-slate-200 text-[8px]">Loading...</p>
+                    <p className="bg-slate-200 text-slate-200 text-[8px]">Loading...</p>
+                    <p className="bg-slate-200 text-slate-200 text-[8px]">Loading...</p>
                 </div>
             </div>
         </div>
