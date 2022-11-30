@@ -12,7 +12,18 @@ import { useGetVideoQuery } from '../rtk/features/api/apiSlice';
 
 export default function Video() {
     const { videoId } = useParams();
-    const { data: video, isLoading, isError } = useGetVideoQuery(videoId);
+    const {
+        data: video,
+        isLoading,
+        isError,
+    } = useGetVideoQuery(
+        videoId /* second parameter e ekta object e refetch er oi condition gula deya jay proyojon hole
+        {
+            refetchOnFocus: true, // tab chnage kre abar focus korle fetch hobe
+            refetchOnMountOrArgChange: 12, // component er props change hole ba onno jekono karone remount hole refetch korbe , eta second e dite hoy
+            refetchOnReconnect: true, // internet connection restored hole refetch hobe 
+        } */
+    );
 
     let content = null;
     if (isLoading) {
