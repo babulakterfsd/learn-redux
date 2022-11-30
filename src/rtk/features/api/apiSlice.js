@@ -9,7 +9,7 @@ export const apiSlice = createApi({
     endpoints: (builder) => ({
         getVideos: builder.query({
             query: () => `/videos`,
-            keepUnusedDataFor: 60, // ei second somoy por data refetch hobe auto, jodi apni ei page ei thaken ar ki .. r onno kothao chole gele eta bondho thakbe, then jkhn abr ashben tkhn theke abar ei second somoy por data refetch hobe auto
+            keepUnusedDataFor: 60, // ei second somoy por data refetch hobe auto
         }),
         getVideo: builder.query({
             query: (videoId) => `/videos/${videoId}`,
