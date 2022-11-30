@@ -20,7 +20,7 @@ export default function Video() {
         videoId /* second parameter e ekta object e refetch er oi condition gula deya jay proyojon hole
         {
             refetchOnFocus: true, // tab chnage kre abar focus korle fetch hobe
-            refetchOnMountOrArgChange: 12, // component er props change hole ba onno jekono karone remount hole refetch korbe , eta second e dite hoy
+            refetchOnMountOrArgChange: 12, // component er props change hole ba onno jekono karone remount hole refetch korbe , eta second e dite hoy. props change hole sathe sathe chnage korbe, ar props change na holeo je somoy deya ache, oi somoy er moddhe remount hole fetch korbe na, oi somoy sesh houa matro fetch korbe
             refetchOnReconnect: true, // internet connection restored hole refetch hobe 
         } */
     );
