@@ -14,7 +14,8 @@ export default function Videos() {
         refetch,
     } = useGetVideosQuery(undefined, {
         skip: !request,
-        // pollingInterval: 3000,  eta miliseconds e dite hoy, polling interval default e 0 thake, but ekhane milisecond deya thakle oi somoy por por automatic refetch hote thakbe .. eka ekai oi time por por request kre data update korte thakbe.. awesome.. mojar bepar hocche, oi page e na thakle taile ar request korte thakbe na, abar jkhn oi page e ashbo browse korte korte , tkhn theke abar request korte thakbe
+        // pollingInterval: 10000,
+        //  eta miliseconds e dite hoy, polling interval default e 0 thake, but ekhane milisecond deya thakle oi somoy por por automatic refetch hote thakbe .. eka ekai oi time por por request kre data update korte thakbe.. awesome.. mojar bepar hocche, oi page e na thakle taile ar request korte thakbe na, abar jkhn oi page e ashbo browse korte korte , tkhn theke abar request korte thakbe
     });
     // refetch ekta function, etar maddhome manually refetch kora jay. niche ekta button click e example dekhiye comment kore rekhechi
 
@@ -47,9 +48,7 @@ export default function Videos() {
     }
 
     if (!isLoading && !isError && videos?.length > 0) {
-        content = videos.map((video) => (
-            <VideoCard key={video.id} video={video} refetch={refetch} />
-        ));
+        content = videos.map((video) => <VideoCard key={video.id} video={video} />);
     }
 
     return (

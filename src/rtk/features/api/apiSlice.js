@@ -6,10 +6,12 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:9000',
     }),
+    tagTypes: ['videos'], // whitelisting tags
     endpoints: (builder) => ({
         getVideos: builder.query({
             query: () => `/videos`,
-            keepUnusedDataFor: 60, // ei second somoy por data refetch hobe auto
+            keepUnusedDataFor: 10, // dhori, homepage theke ami onno page e gechi. ekhn ami jodi 10 second er moddhe home e back ashi, taile ar refetch korbe na, kintu jodi 10 second por ashi taile refetch korbe. ei hocche keep... er kahini
+            providesTags: ['videos'], // ei request er cache ta ke videos tag diye chinhito korlam
         }),
         getVideo: builder.query({
             query: (videoId) => `/videos/${videoId}`,
@@ -22,7 +24,20 @@ export const apiSlice = createApi({
                 return queryString;
             },
         }),
+        addVideo: builder.mutation({
+            query: (data) => ({
+                url: `/videos`,
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['videos'], // addVideo call success houa matro videos tag use kora prottek ta query refetch hobe
+        }),
     }),
 });
 
-export const { useGetVideosQuery, useGetVideoQuery, useGetRelatedVideosQuery } = apiSlice;
+export const {
+    useGetVideosQuery,
+    useGetVideoQuery,
+    useGetRelatedVideosQuery,
+    useAddVideoMutation,
+} = apiSlice;
