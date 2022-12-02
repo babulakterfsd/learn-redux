@@ -43,7 +43,7 @@ export default function Form() {
     };
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
             <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                     <div className="grid grid-cols-6 gap-6">
@@ -131,9 +131,11 @@ export default function Form() {
                 </div>
 
                 {!isLoading && !isError && video?.id && (
-                    <Success message="Video was added successfully" />
+                    <Success message="Video was updated successfully" />
                 )}
-                {!isLoading && isError && <Error message="An error occured while adding video" />}
+                {!isLoading && isError && (
+                    <Error message="An error occured while editing the video" />
+                )}
             </div>
         </form>
     );

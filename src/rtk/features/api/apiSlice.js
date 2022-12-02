@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:9000',
     }),
-    tagTypes: ['videos'], // whitelisting tags
+    tagTypes: ['videos', 'video'], // whitelisting tags
     endpoints: (builder) => ({
         getVideos: builder.query({
             query: () => `/videos`,
@@ -15,6 +15,7 @@ export const apiSlice = createApi({
         }),
         getVideo: builder.query({
             query: (videoId) => `/videos/${videoId}`,
+            providesTags: ['video'],
         }),
         getRelatedVideos: builder.query({
             query: ({ id, title }) => {
@@ -32,6 +33,14 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['videos'], // addVideo call success houa matro videos tag use kora prottek ta query refetch hobe
         }),
+        editVideo: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/videos/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['videos', 'video'],
+        }),
     }),
 });
 
@@ -40,4 +49,5 @@ export const {
     useGetVideoQuery,
     useGetRelatedVideosQuery,
     useAddVideoMutation,
+    useEditVideoMutation,
 } = apiSlice;
