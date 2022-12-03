@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:9000',
     }),
-    tagTypes: ['videos', 'video'], // whitelisting tags
+    tagTypes: ['videos'], // whitelisting tags
     endpoints: (builder) => ({
         getVideos: builder.query({
             query: () => `/videos`,
@@ -15,7 +15,6 @@ export const apiSlice = createApi({
         }),
         getVideo: builder.query({
             query: (videoId) => `/videos/${videoId}`,
-            providesTags: ['video'],
         }),
         getRelatedVideos: builder.query({
             query: ({ id, title }) => {
@@ -39,7 +38,6 @@ export const apiSlice = createApi({
                 method: 'PATCH',
                 body: data,
             }),
-            invalidatesTags: ['videos', 'video'],
         }),
     }),
 });
