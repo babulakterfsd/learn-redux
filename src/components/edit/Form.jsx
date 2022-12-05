@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEditVideoMutation } from '../../rtk/features/api/apiSlice';
-import Error from '../ui/Error';
 import TextArea from '../ui/TextArea';
 import TextInput from '../ui/TextInput';
 
@@ -65,6 +64,19 @@ export default function Form({ video }) {
         setTimeout(() => {
             navigate('/');
         }, 2000);
+    }
+    if (isError) {
+        toast.error('Something is wrong', {
+            toastId: 'error1',
+            position: 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        });
     }
 
     return (
@@ -154,12 +166,6 @@ export default function Form({ video }) {
                         >
                             Save
                         </button>
-                        {/* {!isLoading && !isError && isSuccess && (
-                        <Success message="Video updated successfully" />
-                    )} */}
-                        {!isLoading && isError && (
-                            <Error message="An error occured while adding video" />
-                        )}
                     </div>
                 </div>
             </form>
